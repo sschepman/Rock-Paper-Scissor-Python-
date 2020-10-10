@@ -1,0 +1,118 @@
+# Name, schepman@usc.edu
+# ITP 115, Fall 2020
+# Assignment 7
+# Description:
+# This program runs a rock paper scissors game
+import random
+#Function created to print the welcome message and rules to the user
+def displayMenu():
+    print("Welcome! Let's play rock, paper, scissors. \nThe rules of the game are: \n\tRock smashes scissors" +
+          "\n\tScissors cut paper \n\tPaper covers rock \n\tIf both the choices are the same, it's a tie")
+#Function created to return the computer's choice of rock, paper or scissors
+def getComputerChoice():
+    computerChoice = random.randrange(0, 3)
+    return computerChoice
+#Function that asks for the player to input their choice and stores it in a variable to be returned
+def getPlayerChoice():
+    personChoice = int(input("Please choose (0) for rock, (1) for paper or (2) for scissors"))
+    return personChoice
+#Function that plays a round of rock paper scissors
+def playRound(computerChoice, playerChoice):
+    #Sets default return value (a tie)
+    retVal = 0
+    #The if, elif and else statements print the computer's move, the player's move, who won and reassigns the return
+    #value for who won if necessary (-1 for a loss and 1 for a win)
+    if playerChoice == 0 and computerChoice == 1:
+        print("The computer chose paper.")
+        print("You chose rock")
+        print("Paper covers rock. Computer wins.")
+        retVal = -1
+    elif playerChoice == 0 and computerChoice == 2:
+        print("The computer chose scissors.")
+        print("You chose rock")
+        print("Rock crushes scissors. You win!")
+        retVal = 1
+    elif playerChoice == 0 and computerChoice == 0:
+        print("The computer chose rock.")
+        print("You chose rock")
+        print("You both chose rock. You tied")
+    elif playerChoice == 1 and computerChoice == 0:
+        print("The computer chose rock.")
+        print("You chose paper")
+        print("Paper covers rock. You win!")
+        retVal = 1
+    elif playerChoice == 1 and computerChoice == 1:
+        print("The computer chose paper.")
+        print("You chose paper")
+        print("You both chose paper. It's a tie.")
+    elif playerChoice == 1 and computerChoice == 2:
+        print("The computer chose scissors.")
+        print("You chose paper")
+        print("Scissors cuts paper. Computer wins.")
+        retVal = -1
+    elif playerChoice == 2 and computerChoice == 0:
+        print("The computer chose rock.")
+        print("You chose scissors")
+        print("Rock smashes scissors. Computer wins.")
+        retVal = -1
+    elif playerChoice == 2 and computerChoice == 1:
+        print("The computer chose paper.")
+        print("You chose scissors")
+        print("Scissors cuts paper. You win.")
+        retVal = 1
+    else:
+        print("The computer chose scissors.")
+        print("You chose scissors.")
+        print("You both chose scissors. It's a tie.")
+    #Returns the value based on who won the round
+    return  retVal
+#Function created to repeat the game if the user wants to using if statements to determine boolean return value
+def continueGame():
+    contGame = input("Do you want to continue playing? (y/n)").lower()
+    if contGame == "y":
+        boolean = True
+    else:
+        boolean = False
+    return boolean
+#Main function that performs the program by calling the above functions
+def main():
+    #Calls the displayMenu function to print the welcome statement to the user
+    displayMenu()
+    #Sets local variables counting player wins, computer wins and tie games to 0
+    playerWins = 0
+    computerWins = 0
+    tieGames = 0
+    #These two variables call getComputerChoice and getPlayerChoice and assigns them to variables
+    computer = getComputerChoice()
+    person = getPlayerChoice()
+    #The below line calls the playRound function and assigns the return value to a variable x
+    x = playRound(computer, person)
+    #These if, elif and else statements count the number of times the player wins, computer wins, or there is a tie
+    if x == 1:
+        playerWins += 1
+    elif x == -1:
+        computerWins += 1
+    else:
+        tieGames += 1
+    #While loop that runs based on boolean value returned from calling the continueGameFunction
+    while continueGame():
+        #Displays the welcome menu to user
+        displayMenu()
+        #Assigns the computer choice and player choice to variables
+        computer = getComputerChoice()
+        person = getPlayerChoice()
+        #Calls playRound function
+        x = playRound(computer, person)
+        #If statements counting the player wins, computer wins and ties
+        if x == 1:
+            playerWins += 1
+        elif x == -1:
+            computerWins += 1
+        else:
+            tieGames += 1
+    #These print statements tell the user how many times they have one, the computer has one and how many times they've
+    #tied
+    print("You won " + str(playerWins) + " game(s)")
+    print("The computer won " + str(computerWins) + " game(s)")
+    print("You tied the computer " + str(tieGames) + " game(s)")
+main()
